@@ -218,7 +218,7 @@ export default function Hero() {
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20"
         >
           <button className="btn-primary px-8 py-4 rounded-xl text-white font-semibold flex items-center gap-2 text-lg">
-            Get Started
+            Coming Soon
             <ArrowRight className="w-5 h-5" />
           </button>
           <Button variant="outline" size="lg" className="glass border-zinc-700 hover:border-red-500/50">

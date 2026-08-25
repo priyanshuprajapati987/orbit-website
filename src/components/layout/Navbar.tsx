@@ -72,7 +72,7 @@ export default function Navbar() {
               <GithubIcon className="w-5 h-5" />
             </a>
             <button className="btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold text-white flex items-center gap-2">
-              Get Started
+              Coming Soon
               <ExternalLink className="w-4 h-4" />
             </button>
           </div>
@@ -106,7 +106,7 @@ export default function Navbar() {
           ))}
           <div className="pt-2">
             <button className="btn-primary w-full px-4 py-3 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2">
-              Get Started
+              Coming Soon
               <ExternalLink className="w-4 h-4" />
             </button>
           </div>
