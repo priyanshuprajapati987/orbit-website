@@ -1,0 +1,42 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[[headers]]
+  for = "/**"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[redirects]]
+  from = "/docs"
+  to = "/docs/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/getting-started"
+  to = "/docs/getting-started/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/features"
+  to = "/docs/features/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/api"
+  to = "/docs/api/"
+  status = 301
+
+[[redirects]]
+  from = "/docs/architecture"
+  to = "/docs/architecture/"
+  status = 301
