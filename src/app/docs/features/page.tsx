@@ -2,85 +2,97 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Badge from "@/components/ui/Badge";
 import Card from "@/components/ui/Card";
-import { Brain, Mic, Layers, Route, Server, Zap } from "lucide-react";
+import { Brain, Users, Wrench, Layout, Cpu, Database, Route, Zap } from "lucide-react";
 
 const features = [
   {
-    title: "Long-Term Memory",
+    title: "25 AI Agents",
     description:
-      "ORBIT remembers everything across sessions using Qdrant vector DB + Mem0. Your AI companion builds context over time, learning your preferences and patterns.",
-    icon: Brain,
+      "Specialized agents for different tasks - coding, research, analysis, memory, and more. Each agent is optimized for its domain.",
+    icon: Users,
     gradient: "from-red-500 to-orange-500",
     details: [
-      "Vector-based semantic search",
-      "Persistent context across sessions",
-      "Automatic memory condensation",
-      "Privacy-first architecture",
+      "Coder Agent - Code generation & debugging",
+      "Researcher Agent - Web search & analysis",
+      "Analyst Agent - Data processing",
+      "Memory Agent - Context management",
+      "Planner Agent - Task orchestration",
+      "Executor Agent - Action execution",
     ],
   },
   {
-    title: "Voice Pipeline",
+    title: "20 Tools",
     description:
-      "Real-time voice interaction powered by advanced speech processing. Talk to ORBIT naturally, just like JARVIS.",
-    icon: Mic,
+      "Powerful tools for web search, code execution, file operations, API calls, and system interactions.",
+    icon: Wrench,
     gradient: "from-orange-500 to-red-500",
     details: [
-      "Real-time speech-to-text",
-      "Natural voice synthesis",
-      "Multi-language support",
-      "Low-latency processing",
+      "Web Search - Real-time information",
+      "Code Execution - Safe sandbox",
+      "File Operations - Read/write/manage",
+      "API Calls - External integrations",
+      "System Tools - OS interactions",
+      "Database Queries - Data access",
     ],
   },
   {
-    title: "Multi-LLM Support",
+    title: "147 Blueprints",
     description:
-      "Route tasks to the best AI model for the job. GPT-4 for complex reasoning, Claude for analysis, Gemini for multimodal tasks.",
-    icon: Layers,
+      "Pre-built templates and workflows for common tasks. Deploy solutions in seconds, not hours.",
+    icon: Layout,
     gradient: "from-red-500 to-pink-500",
     details: [
-      "GPT-4 integration",
-      "Claude support",
-      "Gemini multimodal",
-      "Local LLM compatibility",
+      "Task templates",
+      "Workflow patterns",
+      "Solution recipes",
+      "Best practices",
+      "Quick starts",
+      "Custom templates",
     ],
   },
   {
-    title: "170+ API Routes",
+    title: "6 LLM Providers",
     description:
-      "Comprehensive API covering every feature. Full control at your fingertips with RESTful endpoints.",
-    icon: Route,
-    gradient: "from-orange-500 to-yellow-500",
+      "Ollama, Groq, Gemini, Cloudflare, OpenRouter, Portkey - route to the best model for each task.",
+    icon: Cpu,
+    gradient: "from-purple-500 to-pink-500",
     details: [
-      "RESTful design",
-      "Full CRUD operations",
-      "Webhook support",
-      "Rate limiting",
+      "Ollama - Local models",
+      "Groq - Ultra-fast inference",
+      "Gemini - Google's AI",
+      "Cloudflare - Edge AI",
+      "OpenRouter - Multi-model",
+      "Portkey - Enterprise routing",
     ],
   },
   {
-    title: "Self-Hosted",
+    title: "Smart Memory",
     description:
-      "Run on your own infrastructure. Your data, your rules, your AI. Complete control over your environment.",
-    icon: Server,
-    gradient: "from-red-500 to-purple-500",
+      "LIVE + CHUNKS TF-IDF + SUMMARY memory system. Context persists across sessions with instant recall.",
+    icon: Database,
+    gradient: "from-cyan-500 to-blue-500",
     details: [
-      "Docker support",
-      "Kubernetes ready",
-      "Custom deployment",
-      "Full data ownership",
+      "LIVE Context - Real-time state",
+      "CHUNKS TF-IDF - Semantic search",
+      "SUMMARY - Compressed knowledge",
+      "Instant recall <50ms",
+      "Cross-session persistence",
+      "Automatic optimization",
     ],
   },
   {
-    title: "Lightning Fast",
+    title: "RouteLLM + ToolGate",
     description:
-      "Optimized for speed. Millisecond response times for real-time interactions and seamless user experience.",
+      "Intelligent routing with 76 actions. Auto-selects the best provider and tool for maximum performance.",
     icon: Zap,
-    gradient: "from-yellow-500 to-red-500",
+    gradient: "from-green-500 to-emerald-500",
     details: [
-      "Sub-100ms responses",
-      "Async processing",
-      "Caching layer",
+      "10 routing task types",
+      "76 ToolGate actions",
+      "Auto provider selection",
       "Load balancing",
+      "Cost optimization",
+      "Performance tracking",
     ],
   },
 ];
@@ -95,10 +107,10 @@ export default function FeaturesPage() {
           <div className="text-center mb-16">
             <Badge variant="success" className="mb-4">Features</Badge>
             <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-              Powerful Features
+              Real Capabilities
             </h1>
             <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
-              Everything you need for a production-ready AI assistant
+              25 agents, 20 tools, 147 blueprints - actually deployed and running
             </p>
           </div>
 
@@ -128,6 +140,30 @@ export default function FeaturesPage() {
                 </Card>
               );
             })}
+          </div>
+
+          {/* Audit Stats */}
+          <div className="mt-12">
+            <Card>
+              <h2 className="text-2xl font-bold text-white mb-6 text-center">System Audit (August 25, 2026)</h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { label: "Agents", value: "25" },
+                  { label: "Tools", value: "20" },
+                  { label: "Blueprints", value: "147" },
+                  { label: "Components", value: "99" },
+                  { label: "Tests", value: "1,805" },
+                  { label: "Providers", value: "6" },
+                  { label: "Routing Tasks", value: "10" },
+                  { label: "Ground Truth", value: "90.3%" },
+                ].map((stat) => (
+                  <div key={stat.label} className="text-center p-4 rounded-xl bg-zinc-800/30">
+                    <div className="text-2xl font-bold gradient-text mb-1">{stat.value}</div>
+                    <div className="text-xs text-zinc-500 uppercase">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+            </Card>
           </div>
         </div>
       </main>

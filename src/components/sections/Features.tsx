@@ -1,15 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Brain, Mic, Layers, Route, Server, Zap, ArrowRight } from "lucide-react";
+import { Brain, Wrench, Layout, Layers, Database, Zap, ArrowRight } from "lucide-react";
 import { features } from "@/lib/constants";
 
 const iconMap = {
   Brain,
-  Mic,
+  Wrench,
+  Layout,
   Layers,
-  Route,
-  Server,
+  Database,
   Zap,
 };
 
@@ -36,15 +36,15 @@ export default function Features() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6"
           >
             <Zap className="w-4 h-4 text-red-400" />
-            <span className="text-sm text-zinc-300">Powerful Features</span>
+            <span className="text-sm text-zinc-300">Real Capabilities</span>
           </motion.div>
 
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-6 tracking-tight">
             Built for{" "}
-            <span className="gradient-text">Performance</span>
+            <span className="gradient-text">Production</span>
           </h2>
           <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto">
-            Everything you need for a production-ready AI assistant
+            25 agents, 20 tools, 147 blueprints - actually deployed
           </p>
         </motion.div>
 

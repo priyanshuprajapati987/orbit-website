@@ -1,34 +1,34 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code2, Cpu, Database, Globe, Server, Wrench } from "lucide-react";
+import { Cpu, Users, Wrench, Database, Route, Server } from "lucide-react";
 import { techStack } from "@/lib/constants";
 
 const categoryLabels: Record<string, string> = {
-  languages: "Languages",
-  frontend: "Frontend",
-  backend: "Backend",
-  ai: "AI / ML",
-  databases: "Databases",
+  providers: "LLM Providers",
+  agents: "AI Agents",
   tools: "Tools",
+  memory: "Memory System",
+  routing: "Routing",
+  infra: "Infrastructure",
 };
 
-const categoryIcons: Record<string, typeof Code2> = {
-  languages: Code2,
-  frontend: Globe,
-  backend: Server,
-  ai: Cpu,
-  databases: Database,
+const categoryIcons: Record<string, typeof Cpu> = {
+  providers: Cpu,
+  agents: Users,
   tools: Wrench,
+  memory: Database,
+  routing: Route,
+  infra: Server,
 };
 
 const categoryColors: Record<string, { bg: string; text: string; glow: string }> = {
-  languages: { bg: "from-blue-500/20 to-cyan-500/20", text: "text-cyan-400", glow: "shadow-cyan-500/20" },
-  frontend: { bg: "from-cyan-500/20 to-teal-500/20", text: "text-teal-400", glow: "shadow-teal-500/20" },
-  backend: { bg: "from-green-500/20 to-emerald-500/20", text: "text-emerald-400", glow: "shadow-emerald-500/20" },
-  ai: { bg: "from-purple-500/20 to-pink-500/20", text: "text-purple-400", glow: "shadow-purple-500/20" },
-  databases: { bg: "from-orange-500/20 to-amber-500/20", text: "text-amber-400", glow: "shadow-amber-500/20" },
-  tools: { bg: "from-zinc-500/20 to-slate-500/20", text: "text-zinc-400", glow: "shadow-zinc-500/20" },
+  providers: { bg: "from-purple-500/20 to-pink-500/20", text: "text-purple-400", glow: "shadow-purple-500/20" },
+  agents: { bg: "from-red-500/20 to-orange-500/20", text: "text-red-400", glow: "shadow-red-500/20" },
+  tools: { bg: "from-orange-500/20 to-amber-500/20", text: "text-amber-400", glow: "shadow-amber-500/20" },
+  memory: { bg: "from-cyan-500/20 to-blue-500/20", text: "text-cyan-400", glow: "shadow-cyan-500/20" },
+  routing: { bg: "from-green-500/20 to-emerald-500/20", text: "text-emerald-400", glow: "shadow-emerald-500/20" },
+  infra: { bg: "from-zinc-500/20 to-slate-500/20", text: "text-zinc-400", glow: "shadow-zinc-500/20" },
 };
 
 export default function TechStack() {
@@ -53,16 +53,16 @@ export default function TechStack() {
             viewport={{ once: true }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6"
           >
-            <Code2 className="w-4 h-4 text-red-400" />
-            <span className="text-sm text-zinc-300">Tech Stack</span>
+            <Cpu className="w-4 h-4 text-red-400" />
+            <span className="text-sm text-zinc-300">System Architecture</span>
           </motion.div>
 
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-6 tracking-tight">
             Powered by{" "}
-            <span className="gradient-text">Modern Tech</span>
+            <span className="gradient-text">Real Tech</span>
           </h2>
           <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto">
-            Built with cutting-edge technologies for performance and scalability
+            6 LLM providers, 25 agents, 20 tools - built for production
           </p>
         </motion.div>
 
@@ -114,6 +114,34 @@ export default function TechStack() {
             );
           })}
         </div>
+
+        {/* Audit Stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-16"
+        >
+          <div className="glass-card rounded-2xl p-8">
+            <h3 className="text-xl font-bold text-white mb-6 text-center">System Audit</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
+              {[
+                { label: "Agents", value: "25" },
+                { label: "Tools", value: "20" },
+                { label: "Blueprints", value: "147" },
+                { label: "Components", value: "99" },
+                { label: "Tests", value: "1,805" },
+                { label: "Ground Truth", value: "90.3%" },
+              ].map((stat) => (
+                <div key={stat.label} className="text-center p-4 rounded-xl bg-zinc-800/30">
+                  <div className="text-2xl font-black gradient-text mb-1">{stat.value}</div>
+                  <div className="text-xs text-zinc-500 uppercase tracking-wider">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

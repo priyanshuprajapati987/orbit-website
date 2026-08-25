@@ -207,7 +207,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="text-base sm:text-lg text-zinc-500 mb-10 max-w-2xl mx-auto"
         >
-          Your Personal AI Companion with persistent memory, real-time voice, and multi-LLM intelligence.
+          Your Personal AI Companion with 25 agents, 20 tools, 147 blueprints, and 6 LLM providers.
         </motion.p>
 
         {/* CTA Buttons */}

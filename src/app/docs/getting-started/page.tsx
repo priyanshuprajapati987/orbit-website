@@ -15,7 +15,7 @@ export default function GettingStartedPage() {
               Getting Started
             </h1>
             <p className="text-lg text-zinc-400">
-              Set up ORBIT in minutes and start building with AI
+              Set up ORBIT with 25 agents, 20 tools, and 6 LLM providers
             </p>
           </div>
 
@@ -33,7 +33,7 @@ export default function GettingStartedPage() {
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-red-500 mt-1">•</span>
-                API keys for your preferred LLM providers
+                At least one LLM provider API key (Ollama, Groq, Gemini, Cloudflare, OpenRouter, or Portkey)
               </li>
             </ul>
           </section>
@@ -62,13 +62,34 @@ export default function GettingStartedPage() {
               Create a <code className="bg-zinc-800 px-2 py-1 rounded text-red-400">.env</code> file in the root directory:
             </p>
             <div className="rounded-lg bg-zinc-900 border border-zinc-800 p-6 font-mono text-sm">
-              <p className="text-zinc-500 mb-2"># LLM API Keys</p>
-              <p className="text-green-400 mb-2">OPENAI_API_KEY=your_key_here</p>
-              <p className="text-green-400 mb-2">ANTHROPIC_API_KEY=your_key_here</p>
-              <p className="text-green-400 mb-4">GOOGLE_API_KEY=your_key_here</p>
-              <p className="text-zinc-500 mb-2"># Memory</p>
-              <p className="text-green-400 mb-2">QDRANT_URL=http://localhost:6333</p>
-              <p className="text-green-400">MEM0_API_KEY=your_key_here</p>
+              <p className="text-zinc-500 mb-2"># LLM Providers</p>
+              <p className="text-green-400 mb-2">OLLAMA_BASE_URL=http://localhost:11434</p>
+              <p className="text-green-400 mb-2">GROQ_API_KEY=your_key_here</p>
+              <p className="text-green-400 mb-2">GEMINI_API_KEY=your_key_here</p>
+              <p className="text-green-400 mb-2">CLOUDFLARE_API_KEY=your_key_here</p>
+              <p className="text-green-400 mb-2">OPENROUTER_API_KEY=your_key_here</p>
+              <p className="text-green-400 mb-4">PORTKEY_API_KEY=your_key_here</p>
+              <p className="text-zinc-500 mb-2"># Memory System</p>
+              <p className="text-green-400 mb-2">MEMORY_MODE=LIVE_CHUNKS_SUMMARY</p>
+              <p className="text-green-400">RECALL_THRESHOLD=50</p>
+            </div>
+          </section>
+
+          {/* System Architecture */}
+          <section className="mb-12">
+            <h2 className="text-2xl font-bold text-white mb-4">System Architecture</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { label: "Agents", value: "25" },
+                { label: "Tools", value: "20" },
+                { label: "Blueprints", value: "147" },
+                { label: "Providers", value: "6" },
+              ].map((stat) => (
+                <div key={stat.label} className="text-center p-4 rounded-xl bg-zinc-800/30">
+                  <div className="text-2xl font-bold gradient-text mb-1">{stat.value}</div>
+                  <div className="text-xs text-zinc-500 uppercase">{stat.label}</div>
+                </div>
+              ))}
             </div>
           </section>
 
@@ -76,12 +97,14 @@ export default function GettingStartedPage() {
           <section>
             <h2 className="text-2xl font-bold text-white mb-4">Quick Start</h2>
             <div className="rounded-lg bg-zinc-900 border border-zinc-800 p-6 font-mono text-sm">
-              <p className="text-zinc-500 mb-2"># Start with voice enabled</p>
-              <p className="text-green-400 mb-4">python main.py --voice</p>
-              <p className="text-zinc-500 mb-2"># Start with specific LLM</p>
-              <p className="text-green-400 mb-4">python main.py --model gpt-4</p>
+              <p className="text-zinc-500 mb-2"># Start with specific provider</p>
+              <p className="text-green-400 mb-4">python main.py --provider groq</p>
               <p className="text-zinc-500 mb-2"># Start with memory only</p>
-              <p className="text-green-400">python main.py --memory-only</p>
+              <p className="text-green-400 mb-4">python main.py --memory-only</p>
+              <p className="text-zinc-500 mb-2"># List all agents</p>
+              <p className="text-green-400 mb-4">python main.py --agents</p>
+              <p className="text-zinc-500 mb-2"># Run system audit</p>
+              <p className="text-green-400">python main.py --audit</p>
             </div>
           </section>
         </div>

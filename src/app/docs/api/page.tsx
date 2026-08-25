@@ -5,62 +5,62 @@ import Card from "@/components/ui/Card";
 
 const apiCategories = [
   {
-    name: "Chat",
+    name: "Agents",
     routes: 25,
-    description: "Message handling and conversation management",
+    description: "Agent management and orchestration",
     endpoints: [
-      { method: "POST", path: "/api/chat/send", description: "Send a message" },
-      { method: "GET", path: "/api/chat/history", description: "Get chat history" },
-      { method: "DELETE", path: "/api/chat/clear", description: "Clear conversation" },
+      { method: "GET", path: "/api/agents", description: "List all agents" },
+      { method: "POST", path: "/api/agents/spawn", description: "Spawn new agent" },
+      { method: "GET", path: "/api/agents/:id/status", description: "Agent status" },
+    ],
+  },
+  {
+    name: "Tools",
+    routes: 20,
+    description: "Tool execution and management",
+    endpoints: [
+      { method: "GET", path: "/api/tools", description: "List all tools" },
+      { method: "POST", path: "/api/tools/execute", description: "Execute tool" },
+      { method: "GET", path: "/api/tools/:id/logs", description: "Tool logs" },
     ],
   },
   {
     name: "Memory",
     routes: 30,
-    description: "Long-term memory and context management",
+    description: "LIVE + CHUNKS TF-IDF + SUMMARY memory system",
     endpoints: [
-      { method: "POST", path: "/api/memory/store", description: "Store a memory" },
-      { method: "GET", path: "/api/memory/search", description: "Search memories" },
-      { method: "DELETE", path: "/api/memory/:id", description: "Delete a memory" },
+      { method: "POST", path: "/api/memory/store", description: "Store memory" },
+      { method: "GET", path: "/api/memory/recall", description: "Recall context" },
+      { method: "DELETE", path: "/api/memory/:id", description: "Delete memory" },
     ],
   },
   {
-    name: "Voice",
-    routes: 20,
-    description: "Voice processing and synthesis",
-    endpoints: [
-      { method: "POST", path: "/api/voice/transcribe", description: "Transcribe audio" },
-      { method: "POST", path: "/api/voice/synthesize", description: "Generate speech" },
-      { method: "GET", path: "/api/voice/models", description: "List voice models" },
-    ],
-  },
-  {
-    name: "Models",
+    name: "Providers",
     routes: 35,
-    description: "LLM model management and routing",
+    description: "LLM provider management and routing",
     endpoints: [
-      { method: "GET", path: "/api/models", description: "List available models" },
-      { method: "POST", path: "/api/models/route", description: "Route to best model" },
-      { method: "GET", path: "/api/models/:id/stats", description: "Model statistics" },
+      { method: "GET", path: "/api/providers", description: "List providers" },
+      { method: "POST", path: "/api/providers/route", description: "Route to provider" },
+      { method: "GET", path: "/api/providers/:id/stats", description: "Provider stats" },
     ],
   },
   {
-    name: "Users",
+    name: "Blueprints",
     routes: 25,
-    description: "User management and authentication",
+    description: "Blueprint templates and workflows",
     endpoints: [
-      { method: "POST", path: "/api/auth/login", description: "User login" },
-      { method: "POST", path: "/api/auth/register", description: "User registration" },
-      { method: "GET", path: "/api/users/profile", description: "Get user profile" },
+      { method: "GET", path: "/api/blueprints", description: "List blueprints" },
+      { method: "POST", path: "/api/blueprints/deploy", description: "Deploy blueprint" },
+      { method: "GET", path: "/api/blueprints/:id", description: "Blueprint details" },
     ],
   },
   {
     name: "System",
     routes: 35,
-    description: "System health and configuration",
+    description: "System health, audit, and configuration",
     endpoints: [
       { method: "GET", path: "/api/health", description: "Health check" },
-      { method: "GET", path: "/api/status", description: "System status" },
+      { method: "GET", path: "/api/audit", description: "System audit" },
       { method: "GET", path: "/api/metrics", description: "System metrics" },
     ],
   },
@@ -86,7 +86,7 @@ export default function ApiPage() {
               API Reference
             </h1>
             <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
-              170+ routes covering every feature
+              25 agents, 20 tools, 147 blueprints - all accessible via API
             </p>
           </div>
 
@@ -128,6 +128,7 @@ export default function ApiPage() {
             <Card className="inline-block">
               <p className="text-zinc-400 mb-2">Total Routes</p>
               <p className="text-4xl font-bold gradient-text">170+</p>
+              <p className="text-xs text-zinc-500 mt-2">Covering all 25 agents, 20 tools, and 147 blueprints</p>
             </Card>
           </div>
         </div>
