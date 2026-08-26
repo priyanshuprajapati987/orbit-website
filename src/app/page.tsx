@@ -4,6 +4,7 @@ import Hero from "@/components/sections/Hero";
 import Features from "@/components/sections/Features";
 import TechStack from "@/components/sections/TechStack";
 import Demo from "@/components/sections/Demo";
+import PreOrder from "@/components/sections/PreOrder";
 import Contact from "@/components/sections/Contact";
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
         <Features />
         <TechStack />
         <Demo />
+        <PreOrder />
         <Contact />
       </main>
       <Footer />
