@@ -17,6 +17,7 @@ import {
   RefreshCw,
   Trash2,
   Eye,
+  ArrowLeft,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -31,22 +32,29 @@ export default function DashboardPage() {
   const router = useRouter();
   const [preorders, setPreorders] = useState<PreOrder[]>([]);
   const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (status === "unauthenticated") {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted && status === "unauthenticated") {
       router.push("/login");
     }
-    if (status === "authenticated") {
+    if (mounted && status === "authenticated") {
       fetchPreorders();
     }
-  }, [status, router]);
+  }, [status, mounted, router]);
 
   const fetchPreorders = async () => {
     setLoading(true);
     try {
       const res = await fetch("/api/preorders");
-      const data = await res.json();
-      setPreorders(data.preorders || []);
+      if (res.ok) {
+        const data = await res.json();
+        setPreorders(data.preorders || []);
+      }
     } catch (error) {
       console.error("Failed to fetch preorders");
     } finally {
@@ -67,14 +75,19 @@ export default function DashboardPage() {
     }
   };
 
-  if (status === "loading") {
+  // Show loading state
+  if (!mounted || status === "loading") {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black">
-        <div className="w-8 h-8 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+        <div className="text-center">
+          <div className="w-12 h-12 border-2 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-zinc-400">Loading...</p>
+        </div>
       </div>
     );
   }
 
+  // Redirect if not authenticated
   if (!session) {
     return null;
   }
@@ -89,7 +102,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-black">
       {/* Sidebar */}
-      <div className="fixed left-0 top-0 h-full w-64 bg-zinc-900/50 border-r border-zinc-800 p-6">
+      <div className="fixed left-0 top-0 h-full w-64 bg-zinc-900/50 border-r border-zinc-800 p-6 hidden lg:block">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 mb-8">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-red-500 to-orange-500">
@@ -103,31 +116,19 @@ export default function DashboardPage() {
 
         {/* Nav Items */}
         <nav className="space-y-2">
-          <a
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-red-500/10 text-red-400 transition-all"
-          >
+          <a href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl bg-red-500/10 text-red-400 transition-all">
             <LayoutDashboard className="w-5 h-5" />
             <span className="text-sm font-medium">Dashboard</span>
           </a>
-          <a
-            href="#preorders"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800/50 transition-all"
-          >
+          <a href="#preorders" className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800/50 transition-all">
             <Users className="w-5 h-5" />
             <span className="text-sm font-medium">Pre-Orders</span>
           </a>
-          <a
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800/50 transition-all"
-          >
+          <a href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800/50 transition-all">
             <Mail className="w-5 h-5" />
             <span className="text-sm font-medium">Messages</span>
           </a>
-          <a
-            href="#"
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800/50 transition-all"
-          >
+          <a href="#" className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800/50 transition-all">
             <Settings className="w-5 h-5" />
             <span className="text-sm font-medium">Settings</span>
           </a>
@@ -157,7 +158,21 @@ export default function DashboardPage() {
       </div>
 
       {/* Main Content */}
-      <div className="ml-64 p-8">
+      <div className="lg:ml-64 p-4 sm:p-8">
+        {/* Mobile Header */}
+        <div className="lg:hidden flex items-center justify-between mb-6">
+          <Link href="/" className="flex items-center gap-2 text-zinc-400 hover:text-white">
+            <ArrowLeft className="w-5 h-5" />
+            <span>Back</span>
+          </Link>
+          <button
+            onClick={() => signOut({ callbackUrl: "/" })}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-800 text-zinc-400 hover:text-white"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
+        </div>
+
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-white mb-2">Dashboard</h1>
@@ -165,7 +180,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {stats.map((stat, i) => {
             const Icon = stat.icon;
             return (
@@ -188,7 +203,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Pre-Orders Table */}
-        <div id="preorders" className="glass-card rounded-xl overflow-hidden">
+        <div id="preorders" className="glass-card rounded-xl overflow-hidden mb-8">
           <div className="flex items-center justify-between p-6 border-b border-zinc-800">
             <div>
               <h2 className="text-xl font-bold text-white">Pre-Orders</h2>
@@ -270,7 +285,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Quick Actions */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Link href="/" className="glass-card rounded-xl p-6 hover:border-red-500/30 transition-all">
             <h3 className="text-lg font-bold text-white mb-2">View Website</h3>
             <p className="text-sm text-zinc-400">See your live website</p>

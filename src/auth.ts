@@ -1,9 +1,9 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-// Admin credentials - In production, use database
+// Admin credentials
 const ADMIN_EMAIL = "priyanshuprajapati2693@gmail.com";
-const ADMIN_PASSWORD = "ORBIT@Admin2026"; // Change this in production!
+const ADMIN_PASSWORD = "ORBIT@Admin2026";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -18,7 +18,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return null;
         }
 
-        // Simple validation - In production, use database
         if (
           credentials.email === ADMIN_EMAIL &&
           credentials.password === ADMIN_PASSWORD
@@ -38,15 +37,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        token.id = user.id;
         token.role = (user as any).role;
       }
       return token;
     },
     async session({ session, token }) {
       if (session?.user) {
+        session.user.id = token.id as string;
         (session.user as any).role = token.role;
       }
       return session;
+    },
+    async redirect({ url, baseUrl }) {
+      // After login, redirect to dashboard
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      if (new URL(url).origin === baseUrl) return url;
+      return `${baseUrl}/dashboard`;
     },
   },
   pages: {
@@ -55,5 +62,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt",
   },
-  secret: process.env.NEXTAUTH_SECRET || "orbit-secret-key-change-in-production",
+  secret: process.env.NEXTAUTH_SECRET || "orbit-secret-key-2026-production",
 });

@@ -29,13 +29,13 @@ export default function LoginPage() {
 
       if (result?.error) {
         setError("Invalid email or password");
+        setLoading(false);
       } else {
-        router.push("/dashboard");
-        router.refresh();
+        // Success - redirect to dashboard
+        window.location.href = "/dashboard";
       }
     } catch (err) {
       setError("Something went wrong");
-    } finally {
       setLoading(false);
     }
   };
