@@ -132,7 +132,7 @@ export default function PreOrder() {
                 <span>•</span>
                 <span>Cancel anytime</span>
                 <span>•</span>
-                <span>Join 500+ waitlist</span>
+                <span>Be first to access</span>
               </div>
             </div>
           </div>

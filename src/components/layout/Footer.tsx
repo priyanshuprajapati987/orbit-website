@@ -54,7 +54,7 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-sm text-zinc-400 max-w-md mb-6 leading-relaxed">
-              Your Personal AI Companion. Like JARVIS, but it actually works. Built with memory, voice, and multi-LLM support.
+              Your Personal AI Companion. Like JARVIS, but it actually works. 25 agents, 20 tools, 147 blueprints, and 6 LLM providers.
             </p>
             <div className="flex items-center gap-3">
               {socialLinks.map((social) => {

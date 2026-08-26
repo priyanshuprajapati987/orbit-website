@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, ExternalLink } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { GithubIcon } from "@/components/ui/Icons";
 import { siteConfig } from "@/lib/constants";
 
@@ -72,14 +72,11 @@ export default function Navbar() {
               <GithubIcon className="w-5 h-5" />
             </a>
             <a href="/#preorder">
-              <button className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white border border-red-500/30 hover:bg-red-500/10 transition-all duration-200 flex items-center gap-2">
-                Pre-Order
+              <button className="btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold text-white flex items-center gap-2">
+                Get Access
+                <ArrowRight className="w-4 h-4" />
               </button>
             </a>
-            <button className="btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold text-white flex items-center gap-2">
-              Coming Soon
-              <ExternalLink className="w-4 h-4" />
-            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -109,16 +106,13 @@ export default function Navbar() {
               {item.label}
             </Link>
           ))}
-          <div className="pt-2 space-y-2">
+          <div className="pt-2">
             <a href="/#preorder" className="block">
-              <button className="w-full px-4 py-3 rounded-xl text-sm font-semibold text-white border border-red-500/30 hover:bg-red-500/10 transition-all duration-200">
-                Pre-Order
+              <button className="btn-primary w-full px-4 py-3 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2">
+                Get Access
+                <ArrowRight className="w-4 h-4" />
               </button>
             </a>
-            <button className="btn-primary w-full px-4 py-3 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2">
-              Coming Soon
-              <ExternalLink className="w-4 h-4" />
-            </button>
           </div>
         </div>
       </div>

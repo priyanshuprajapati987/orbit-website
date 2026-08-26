@@ -131,7 +131,7 @@ export default function Contact() {
 
               {/* Email */}
               <motion.a
-                href="mailto:contact@orbit.dev"
+                href="mailto:priyanshuprajapati2693@gmail.com"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
@@ -139,7 +139,7 @@ export default function Contact() {
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition-all duration-300"
               >
                 <Mail className="w-5 h-5" />
-                <span>contact@orbit.dev</span>
+                <span>priyanshuprajapati2693@gmail.com</span>
               </motion.a>
             </div>
           </div>

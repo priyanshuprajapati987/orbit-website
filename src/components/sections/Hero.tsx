@@ -217,10 +217,12 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20"
         >
-          <button className="btn-primary px-8 py-4 rounded-xl text-white font-semibold flex items-center gap-2 text-lg">
-            Coming Soon
-            <ArrowRight className="w-5 h-5" />
-          </button>
+          <a href="/#preorder">
+            <button className="btn-primary px-8 py-4 rounded-xl text-white font-semibold flex items-center gap-2 text-lg">
+              Get Access
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          </a>
           <Button variant="outline" size="lg" className="glass border-zinc-700 hover:border-red-500/50">
             <BookOpen className="w-5 h-5" />
             Documentation
