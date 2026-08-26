@@ -141,17 +141,6 @@ export default function LoginPage() {
               )}
             </button>
           </form>
-
-          {/* Demo Credentials */}
-          <div className="mt-6 p-4 rounded-lg bg-zinc-800/30 border border-zinc-700/50">
-            <p className="text-xs text-zinc-500 mb-2">Demo Credentials:</p>
-            <p className="text-xs text-zinc-400">
-              <span className="text-zinc-300">Email:</span> priyanshuprajapati2693@gmail.com
-            </p>
-            <p className="text-xs text-zinc-400">
-              <span className="text-zinc-300">Password:</span> ORBIT@Admin2026
-            </p>
-          </div>
         </div>
 
         {/* Back to Home */}
