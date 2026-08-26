@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Providers from "@/components/Providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,24 +16,22 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "ORBIT - Your Personal AI Companion",
   description:
-    "Like JARVIS, but it actually works. ORBIT is an AI assistant with memory, voice, and multi-LLM support. 170+ API routes, self-hosted.",
+    "Like JARVIS, but it actually works. 25 agents, 20 tools, 147 blueprints, and 6 LLM providers.",
   keywords: [
     "AI",
     "Assistant",
     "ORBIT",
     "JARVIS",
-    "Voice AI",
-    "Memory",
-    "Multi-LLM",
-    "GPT-4",
-    "Claude",
-    "Gemini",
+    "25 Agents",
+    "20 Tools",
+    "147 Blueprints",
+    "6 LLM Providers",
   ],
   authors: [{ name: "Priyanshu Prajapati" }],
   openGraph: {
     title: "ORBIT - Your Personal AI Companion",
     description:
-      "Like JARVIS, but it actually works. AI assistant with memory, voice, and multi-LLM support.",
+      "Like JARVIS, but it actually works. 25 agents, 20 tools, 147 blueprints, and 6 LLM providers.",
     type: "website",
     locale: "en_US",
     siteName: "ORBIT",
@@ -41,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ORBIT - Your Personal AI Companion",
     description:
-      "Like JARVIS, but it actually works. AI assistant with memory, voice, and multi-LLM support.",
+      "Like JARVIS, but it actually works. 25 agents, 20 tools, 147 blueprints, and 6 LLM providers.",
   },
   robots: {
     index: true,
@@ -60,7 +59,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-black text-white">
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
