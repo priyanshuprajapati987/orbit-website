@@ -2,15 +2,17 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { Menu, X, ArrowRight, LayoutDashboard, LogOut } from "lucide-react";
 import { GithubIcon } from "@/components/ui/Icons";
 import { siteConfig } from "@/lib/constants";
+import { useAuth } from "@/lib/auth-context";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { data: session } = useSession();
+  const { user, logout } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -24,6 +26,11 @@ export default function Navbar() {
     { label: "Features", href: "/docs/features" },
     { label: "API", href: "/docs/api" },
   ];
+
+  const handleLogout = () => {
+    logout();
+    router.push("/");
+  };
 
   return (
     <nav
@@ -74,7 +81,7 @@ export default function Navbar() {
               <GithubIcon className="w-5 h-5" />
             </a>
             
-            {session ? (
+            {user ? (
               <>
                 <Link href="/dashboard">
                   <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-zinc-800 hover:bg-zinc-700 transition-all">
@@ -83,7 +90,7 @@ export default function Navbar() {
                   </button>
                 </Link>
                 <button
-                  onClick={() => signOut({ callbackUrl: "/" })}
+                  onClick={handleLogout}
                   className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all"
                 >
                   <LogOut className="w-4 h-4" />
@@ -127,7 +134,7 @@ export default function Navbar() {
             </Link>
           ))}
           <div className="pt-2 space-y-2">
-            {session ? (
+            {user ? (
               <>
                 <Link href="/dashboard" onClick={() => setIsOpen(false)} className="block">
                   <button className="w-full px-4 py-3 rounded-xl text-sm font-semibold text-white bg-zinc-800 hover:bg-zinc-700 transition-all flex items-center justify-center gap-2">
@@ -136,7 +143,7 @@ export default function Navbar() {
                   </button>
                 </Link>
                 <button
-                  onClick={() => signOut({ callbackUrl: "/" })}
+                  onClick={() => { handleLogout(); setIsOpen(false); }}
                   className="w-full px-4 py-3 rounded-xl text-sm font-semibold text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all flex items-center justify-center gap-2"
                 >
                   <LogOut className="w-4 h-4" />

@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff, ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { useAuth } from "@/lib/auth-context";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -13,6 +13,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,21 +22,15 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
-
-      if (result?.error) {
-        setError("Invalid email or password");
-        setLoading(false);
+      const success = await login(email, password);
+      if (success) {
+        router.push("/dashboard");
       } else {
-        // Success - redirect to dashboard
-        window.location.href = "/dashboard";
+        setError("Invalid email or password");
       }
     } catch (err) {
       setError("Something went wrong");
+    } finally {
       setLoading(false);
     }
   };

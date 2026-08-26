@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
@@ -20,6 +19,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import Link from "next/link";
+import { useAuth } from "@/lib/auth-context";
 
 interface PreOrder {
   email: string;
@@ -28,24 +28,19 @@ interface PreOrder {
 }
 
 export default function DashboardPage() {
-  const { data: session, status } = useSession();
+  const { user, logout, isLoading } = useAuth();
   const router = useRouter();
   const [preorders, setPreorders] = useState<PreOrder[]>([]);
   const [loading, setLoading] = useState(true);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (mounted && status === "unauthenticated") {
+    if (!isLoading && !user) {
       router.push("/login");
     }
-    if (mounted && status === "authenticated") {
+    if (user) {
       fetchPreorders();
     }
-  }, [status, mounted, router]);
+  }, [user, isLoading, router]);
 
   const fetchPreorders = async () => {
     setLoading(true);
@@ -75,8 +70,13 @@ export default function DashboardPage() {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    router.push("/");
+  };
+
   // Show loading state
-  if (!mounted || status === "loading") {
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black">
         <div className="text-center">
@@ -88,7 +88,7 @@ export default function DashboardPage() {
   }
 
   // Redirect if not authenticated
-  if (!session) {
+  if (!user) {
     return null;
   }
 
@@ -142,12 +142,12 @@ export default function DashboardPage() {
                 <span className="text-sm font-bold text-white">P</span>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white truncate">{session.user?.name}</p>
-                <p className="text-xs text-zinc-500 truncate">{session.user?.email}</p>
+                <p className="text-sm font-medium text-white truncate">{user.name}</p>
+                <p className="text-xs text-zinc-500 truncate">{user.email}</p>
               </div>
             </div>
             <button
-              onClick={() => signOut({ callbackUrl: "/" })}
+              onClick={handleLogout}
               className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-zinc-700/50 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-all text-sm"
             >
               <LogOut className="w-4 h-4" />
@@ -166,7 +166,7 @@ export default function DashboardPage() {
             <span>Back</span>
           </Link>
           <button
-            onClick={() => signOut({ callbackUrl: "/" })}
+            onClick={handleLogout}
             className="flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-800 text-zinc-400 hover:text-white"
           >
             <LogOut className="w-4 h-4" />
@@ -176,7 +176,7 @@ export default function DashboardPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-white mb-2">Dashboard</h1>
-          <p className="text-zinc-400">Welcome back, {session.user?.name}</p>
+          <p className="text-zinc-400">Welcome back, {user.name}</p>
         </div>
 
         {/* Stats Grid */}
