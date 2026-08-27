@@ -6,6 +6,7 @@ import TechStack from "@/components/sections/TechStack";
 import Demo from "@/components/sections/Demo";
 import PreOrder from "@/components/sections/PreOrder";
 import Contact from "@/components/sections/Contact";
+import AIChat from "@/components/ai/AIChat";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <AIChat />
     </>
   );
 }

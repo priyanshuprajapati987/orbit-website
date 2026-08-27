@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ShoppingCart, Mail, Check, Sparkles, ArrowRight, Shield, Clock, Zap } from "lucide-react";
+import { ShoppingCart, Mail, Check, Sparkles, ArrowRight, Shield, Clock, Zap, Loader2 } from "lucide-react";
 
 export default function PreOrder() {
   const [email, setEmail] = useState("");
@@ -15,17 +15,17 @@ export default function PreOrder() {
     setStatus("loading");
 
     try {
-      const res = await fetch("/api/preorders", {
+      // Netlify Forms submission
+      const response = await fetch("/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          "form-name": "preorder",
+          email,
+        }).toString(),
       });
 
-      const data = await res.json();
-
-      if (res.status === 409) {
-        setStatus("exists");
-      } else if (res.ok) {
+      if (response.ok) {
         setStatus("success");
         setEmail("");
       } else {
@@ -105,12 +105,41 @@ export default function PreOrder() {
               </div>
 
               {/* Form */}
-              {status === "idle" || status === "loading" || status === "error" ? (
-                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+              {status === "success" ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex items-center gap-4 p-4 rounded-xl bg-green-500/10 border border-green-500/20"
+                >
+                  <div className="p-2 rounded-full bg-green-500/20">
+                    <Check className="w-5 h-5 text-green-400" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-white">You&apos;re on the list!</div>
+                    <div className="text-xs text-zinc-400">We&apos;ll notify you when ORBIT is ready.</div>
+                  </div>
+                </motion.div>
+              ) : (
+                <form
+                  name="preorder"
+                  method="POST"
+                  data-netlify="true"
+                  data-netlify-honeypot="bot-field"
+                  onSubmit={handleSubmit}
+                  className="flex flex-col sm:flex-row gap-3"
+                >
+                  <input type="hidden" name="form-name" value="preorder" />
+                  <p className="hidden">
+                    <label>
+                      Don&apos;t fill this out: <input name="bot-field" />
+                    </label>
+                  </p>
+                  
                   <div className="relative flex-1">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" />
                     <input
                       type="email"
+                      name="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email"
@@ -125,7 +154,7 @@ export default function PreOrder() {
                   >
                     {status === "loading" ? (
                       <>
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <Loader2 className="w-5 h-5 animate-spin" />
                         Processing...
                       </>
                     ) : (
@@ -137,34 +166,6 @@ export default function PreOrder() {
                     )}
                   </button>
                 </form>
-              ) : status === "exists" ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="flex items-center gap-4 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20"
-                >
-                  <div className="p-2 rounded-full bg-blue-500/20">
-                    <Mail className="w-5 h-5 text-blue-400" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-semibold text-white">You&apos;re already on the list!</div>
-                    <div className="text-xs text-zinc-400">We&apos;ll notify you when ORBIT is ready.</div>
-                  </div>
-                </motion.div>
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="flex items-center gap-4 p-4 rounded-xl bg-green-500/10 border border-green-500/20"
-                >
-                  <div className="p-2 rounded-full bg-green-500/20">
-                    <Check className="w-5 h-5 text-green-400" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-semibold text-white">You&apos;re on the list!</div>
-                    <div className="text-xs text-zinc-400">We&apos;ll notify you when ORBIT is ready.</div>
-                  </div>
-                </motion.div>
               )}
 
               {/* Trust Badges */}

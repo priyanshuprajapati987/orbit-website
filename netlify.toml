@@ -1,9 +1,7 @@
 [build]
   command = "npm run build"
   publish = ".next"
-
-[build.environment]
-  NODE_VERSION = "20"
+  environment = { NODE_VERSION = "20" }
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
@@ -18,25 +16,10 @@
 
 [[redirects]]
   from = "/docs"
-  to = "/docs/"
+  to = "/docs/getting-started"
   status = 301
 
 [[redirects]]
-  from = "/docs/getting-started"
-  to = "/docs/getting-started/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/features"
-  to = "/docs/features/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/api"
-  to = "/docs/api/"
-  status = 301
-
-[[redirects]]
-  from = "/docs/architecture"
-  to = "/docs/architecture/"
-  status = 301
+  from = "/dashboard"
+  to = "/login"
+  status = 302

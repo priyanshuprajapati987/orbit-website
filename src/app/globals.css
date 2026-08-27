@@ -422,3 +422,54 @@ body {
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.3), transparent);
 }
+
+/* ===== CHAT ANIMATIONS ===== */
+@keyframes chat-bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.chat-bounce {
+  animation: chat-bounce 2s ease-in-out infinite;
+}
+
+/* ===== TERMINAL CURSOR ===== */
+.terminal-cursor::after {
+  content: '█';
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ===== GLOW PULSE ===== */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 0, 0, 0.6), 0 0 60px rgba(255, 69, 0, 0.3);
+  }
+}
+
+.glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* ===== SMOOTH SCROLL ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ===== FOCUS STYLES ===== */
+input:focus, textarea:focus {
+  outline: none;
+}
+
+/* ===== SELECTION ===== */
+::selection {
+  background: rgba(255, 0, 0, 0.3);
+  color: white;
+}
