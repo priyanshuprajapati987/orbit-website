@@ -1,19 +1,59 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ShoppingCart, Mail, Check, Sparkles, ArrowRight, Shield, Clock, Zap } from "lucide-react";
+
+interface PreOrder {
+  email: string;
+  date: string;
+  status: string;
+}
 
 export default function PreOrder() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [alreadyExists, setAlreadyExists] = useState(false);
+
+  useEffect(() => {
+    // Check if already submitted
+    const stored = localStorage.getItem("orbit_preorders");
+    if (stored) {
+      const preorders: PreOrder[] = JSON.parse(stored);
+      const exists = preorders.find((p) => p.email === email);
+      if (exists) {
+        setAlreadyExists(true);
+      }
+    }
+  }, [email]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setSubmitted(true);
-      setEmail("");
+    if (!email) return;
+
+    // Get existing preorders
+    const stored = localStorage.getItem("orbit_preorders");
+    const preorders: PreOrder[] = stored ? JSON.parse(stored) : [];
+
+    // Check if already exists
+    const exists = preorders.find((p) => p.email === email);
+    if (exists) {
+      setAlreadyExists(true);
+      return;
     }
+
+    // Add new preorder
+    const newPreorder: PreOrder = {
+      email,
+      date: new Date().toISOString(),
+      status: "pending",
+    };
+
+    preorders.push(newPreorder);
+    localStorage.setItem("orbit_preorders", JSON.stringify(preorders));
+
+    setSubmitted(true);
+    setEmail("");
   };
 
   return (
@@ -85,7 +125,7 @@ export default function PreOrder() {
               </div>
 
               {/* Form */}
-              {!submitted ? (
+              {!submitted && !alreadyExists ? (
                 <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
                   <div className="relative flex-1">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" />
@@ -107,6 +147,20 @@ export default function PreOrder() {
                     <ArrowRight className="w-5 h-5" />
                   </button>
                 </form>
+              ) : alreadyExists ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex items-center gap-4 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20"
+                >
+                  <div className="p-2 rounded-full bg-blue-500/20">
+                    <Mail className="w-5 h-5 text-blue-400" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-white">You&apos;re already on the list!</div>
+                    <div className="text-xs text-zinc-400">We&apos;ll notify you when ORBIT is ready.</div>
+                  </div>
+                </motion.div>
               ) : (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}

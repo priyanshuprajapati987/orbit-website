@@ -42,29 +42,32 @@ export default function DashboardPage() {
     }
   }, [user, isLoading, router]);
 
-  const fetchPreorders = async () => {
+  const fetchPreorders = () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/preorders");
-      if (res.ok) {
-        const data = await res.json();
-        setPreorders(data.preorders || []);
+      const stored = localStorage.getItem("orbit_preorders");
+      if (stored) {
+        setPreorders(JSON.parse(stored));
+      } else {
+        setPreorders([]);
       }
     } catch (error) {
       console.error("Failed to fetch preorders");
+      setPreorders([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const deletePreorder = async (email: string) => {
+  const deletePreorder = (email: string) => {
     try {
-      await fetch("/api/preorders", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      fetchPreorders();
+      const stored = localStorage.getItem("orbit_preorders");
+      if (stored) {
+        const preorders: PreOrder[] = JSON.parse(stored);
+        const filtered = preorders.filter((p) => p.email !== email);
+        localStorage.setItem("orbit_preorders", JSON.stringify(filtered));
+        setPreorders(filtered);
+      }
     } catch (error) {
       console.error("Failed to delete preorder");
     }
