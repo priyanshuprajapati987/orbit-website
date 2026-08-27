@@ -1,63 +1,84 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 interface User {
-  email: string;
+  id: number;
   name: string;
-  role: string;
+  email: string;
 }
 
 interface AuthContextType {
   user: User | null;
-  login: (email: string, password: string) => Promise<boolean>;
-  logout: () => void;
+  login: (email: string, password: string) => Promise<{ error?: string }>;
+  logout: () => Promise<void>;
   isLoading: boolean;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-// Admin credentials
-const ADMIN_EMAIL = "priyanshuprajapati2693@gmail.com";
-const ADMIN_PASSWORD = "ORBIT@Admin2026";
+const AuthContext = createContext<AuthContextType>({
+  user: null,
+  login: async () => ({}),
+  logout: async () => {},
+  isLoading: true,
+});
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Check session on mount
   useEffect(() => {
-    // Check localStorage on mount
-    const storedUser = localStorage.getItem("orbit_user");
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch {
-        localStorage.removeItem("orbit_user");
-      }
-    }
-    setIsLoading(false);
+    checkSession();
   }, []);
 
-  const login = async (email: string, password: string): Promise<boolean> => {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-      const newUser = {
-        email: ADMIN_EMAIL,
-        name: "Priyanshu Prajapati",
-        role: "admin",
-      };
-      setUser(newUser);
-      localStorage.setItem("orbit_user", JSON.stringify(newUser));
-      return true;
+  const checkSession = async () => {
+    try {
+      // Try to get preorders - if success, we're authenticated
+      const res = await fetch("/api/preorders");
+      if (res.ok) {
+        // Get user from cookie
+        const cookie = document.cookie.split(";").find((c) => c.trim().startsWith("orbit_token="));
+        if (cookie) {
+          // Decode token to get user info
+          const token = cookie.split("=")[1];
+          const payload = JSON.parse(atob(token.split(".")[1]));
+          setUser({ id: payload.userId, name: payload.name, email: payload.email });
+        }
+      }
+    } catch {
+      // Not authenticated
+    } finally {
+      setIsLoading(false);
     }
-    return false;
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("orbit_user");
+  const login = async (email: string, password: string) => {
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        return { error: data.error };
+      }
+
+      setUser(data.user);
+      return {};
+    } catch {
+      return { error: "Failed to connect to server" };
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } finally {
+      setUser(null);
+    }
   };
 
   return (
@@ -68,9 +89,5 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
+  return useContext(AuthContext);
 }

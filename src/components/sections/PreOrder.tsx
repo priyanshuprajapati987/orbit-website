@@ -1,59 +1,39 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ShoppingCart, Mail, Check, Sparkles, ArrowRight, Shield, Clock, Zap } from "lucide-react";
 
-interface PreOrder {
-  email: string;
-  date: string;
-  status: string;
-}
-
 export default function PreOrder() {
   const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [alreadyExists, setAlreadyExists] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "exists" | "error">("idle");
 
-  useEffect(() => {
-    // Check if already submitted
-    const stored = localStorage.getItem("orbit_preorders");
-    if (stored) {
-      const preorders: PreOrder[] = JSON.parse(stored);
-      const exists = preorders.find((p) => p.email === email);
-      if (exists) {
-        setAlreadyExists(true);
-      }
-    }
-  }, [email]);
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email || status === "loading") return;
 
-    // Get existing preorders
-    const stored = localStorage.getItem("orbit_preorders");
-    const preorders: PreOrder[] = stored ? JSON.parse(stored) : [];
+    setStatus("loading");
 
-    // Check if already exists
-    const exists = preorders.find((p) => p.email === email);
-    if (exists) {
-      setAlreadyExists(true);
-      return;
+    try {
+      const res = await fetch("/api/preorders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+
+      if (res.status === 409) {
+        setStatus("exists");
+      } else if (res.ok) {
+        setStatus("success");
+        setEmail("");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
     }
-
-    // Add new preorder
-    const newPreorder: PreOrder = {
-      email,
-      date: new Date().toISOString(),
-      status: "pending",
-    };
-
-    preorders.push(newPreorder);
-    localStorage.setItem("orbit_preorders", JSON.stringify(preorders));
-
-    setSubmitted(true);
-    setEmail("");
   };
 
   return (
@@ -125,7 +105,7 @@ export default function PreOrder() {
               </div>
 
               {/* Form */}
-              {!submitted && !alreadyExists ? (
+              {status === "idle" || status === "loading" || status === "error" ? (
                 <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
                   <div className="relative flex-1">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" />
@@ -140,14 +120,24 @@ export default function PreOrder() {
                   </div>
                   <button
                     type="submit"
-                    className="btn-primary px-8 py-4 rounded-xl text-white font-semibold flex items-center justify-center gap-2 whitespace-nowrap"
+                    disabled={status === "loading"}
+                    className="btn-primary px-8 py-4 rounded-xl text-white font-semibold flex items-center justify-center gap-2 whitespace-nowrap disabled:opacity-50"
                   >
-                    <Sparkles className="w-5 h-5" />
-                    Pre-Order
-                    <ArrowRight className="w-5 h-5" />
+                    {status === "loading" ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        Processing...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="w-5 h-5" />
+                        Pre-Order
+                        <ArrowRight className="w-5 h-5" />
+                      </>
+                    )}
                   </button>
                 </form>
-              ) : alreadyExists ? (
+              ) : status === "exists" ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}

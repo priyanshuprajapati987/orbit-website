@@ -22,9 +22,10 @@ import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 
 interface PreOrder {
+  id: number;
   email: string;
-  date: string;
   status: string;
+  created_at: string;
 }
 
 export default function DashboardPage() {
@@ -42,39 +43,38 @@ export default function DashboardPage() {
     }
   }, [user, isLoading, router]);
 
-  const fetchPreorders = () => {
+  const fetchPreorders = async () => {
     setLoading(true);
     try {
-      const stored = localStorage.getItem("orbit_preorders");
-      if (stored) {
-        setPreorders(JSON.parse(stored));
-      } else {
-        setPreorders([]);
+      const res = await fetch("/api/preorders");
+      if (res.ok) {
+        const data = await res.json();
+        setPreorders(data.preorders);
       }
-    } catch (error) {
+    } catch {
       console.error("Failed to fetch preorders");
-      setPreorders([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const deletePreorder = (email: string) => {
+  const deletePreorder = async (email: string) => {
     try {
-      const stored = localStorage.getItem("orbit_preorders");
-      if (stored) {
-        const preorders: PreOrder[] = JSON.parse(stored);
-        const filtered = preorders.filter((p) => p.email !== email);
-        localStorage.setItem("orbit_preorders", JSON.stringify(filtered));
-        setPreorders(filtered);
+      const res = await fetch("/api/preorders", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (res.ok) {
+        setPreorders(preorders.filter((p) => p.email !== email));
       }
-    } catch (error) {
+    } catch {
       console.error("Failed to delete preorder");
     }
   };
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     router.push("/");
   };
 
@@ -245,7 +245,7 @@ export default function DashboardPage() {
                 </thead>
                 <tbody>
                   {preorders.map((order) => (
-                    <tr key={order.email} className="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
+                    <tr key={order.id} className="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors">
                       <td className="p-4">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center">
@@ -255,7 +255,7 @@ export default function DashboardPage() {
                         </div>
                       </td>
                       <td className="p-4 text-sm text-zinc-400">
-                        {new Date(order.date).toLocaleDateString()}
+                        {new Date(order.created_at).toLocaleDateString()}
                       </td>
                       <td className="p-4">
                         <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
