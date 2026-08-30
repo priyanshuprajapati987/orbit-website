@@ -6,16 +6,15 @@ import { ShoppingCart, Mail, Check, Sparkles, ArrowRight, Shield, Clock, Zap, Lo
 
 export default function PreOrder() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "exists" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || status === "loading") return;
+    if (!email) return;
 
     setStatus("loading");
 
     try {
-      // Netlify Forms submission
       const response = await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -43,7 +42,6 @@ export default function PreOrder() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-500/10 rounded-full blur-3xl" />
 
       <div className="relative z-10 mx-auto max-w-4xl">
-        {/* Main Card */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -51,7 +49,6 @@ export default function PreOrder() {
           transition={{ duration: 0.6 }}
         >
           <div className="glass-card rounded-3xl overflow-hidden">
-            {/* Top Gradient Bar */}
             <div className="h-1 bg-gradient-to-r from-red-500 via-orange-500 to-red-500" />
 
             <div className="p-8 md:p-12">
@@ -104,28 +101,29 @@ export default function PreOrder() {
                 })}
               </div>
 
-              {/* Form */}
+              {/* Success State */}
               {status === "success" ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="flex items-center gap-4 p-4 rounded-xl bg-green-500/10 border border-green-500/20"
+                  className="flex items-center gap-4 p-6 rounded-xl bg-green-500/10 border border-green-500/20"
                 >
-                  <div className="p-2 rounded-full bg-green-500/20">
-                    <Check className="w-5 h-5 text-green-400" />
+                  <div className="p-3 rounded-full bg-green-500/20">
+                    <Check className="w-6 h-6 text-green-400" />
                   </div>
                   <div>
-                    <div className="text-sm font-semibold text-white">You&apos;re on the list!</div>
-                    <div className="text-xs text-zinc-400">We&apos;ll notify you when ORBIT is ready.</div>
+                    <div className="text-lg font-bold text-white">You&apos;re on the list!</div>
+                    <div className="text-sm text-zinc-400">We&apos;ll notify you when ORBIT is ready.</div>
                   </div>
                 </motion.div>
               ) : (
+                /* Native Netlify Form - No JS submission, direct to Netlify */
                 <form
                   name="preorder"
                   method="POST"
                   data-netlify="true"
                   data-netlify-honeypot="bot-field"
-                  onSubmit={handleSubmit}
+                  action="/preorder-success"
                   className="flex flex-col sm:flex-row gap-3"
                 >
                   <input type="hidden" name="form-name" value="preorder" />
@@ -149,21 +147,11 @@ export default function PreOrder() {
                   </div>
                   <button
                     type="submit"
-                    disabled={status === "loading"}
-                    className="btn-primary px-8 py-4 rounded-xl text-white font-semibold flex items-center justify-center gap-2 whitespace-nowrap disabled:opacity-50"
+                    className="btn-primary px-8 py-4 rounded-xl text-white font-semibold flex items-center justify-center gap-2 whitespace-nowrap"
                   >
-                    {status === "loading" ? (
-                      <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                        Processing...
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles className="w-5 h-5" />
-                        Pre-Order
-                        <ArrowRight className="w-5 h-5" />
-                      </>
-                    )}
+                    <Sparkles className="w-5 h-5" />
+                    Pre-Order
+                    <ArrowRight className="w-5 h-5" />
                   </button>
                 </form>
               )}

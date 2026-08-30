@@ -31,27 +31,30 @@ const socialLinks = [
 ];
 
 export default function Contact() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("loading");
 
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
     try {
-      // Netlify Forms submission
       const response = await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
           "form-name": "contact",
-          ...formData,
+          name: formData.get("name") as string,
+          email: formData.get("email") as string,
+          message: formData.get("message") as string,
         }).toString(),
       });
 
       if (response.ok) {
         setStatus("success");
-        setFormData({ name: "", email: "", message: "" });
+        form.reset();
       } else {
         setStatus("error");
       }
@@ -140,15 +143,13 @@ export default function Contact() {
                   </p>
                   
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-zinc-300 mb-2">
+                    <label htmlFor="contact-name" className="block text-sm font-medium text-zinc-300 mb-2">
                       Name
                     </label>
                     <input
-                      id="name"
+                      id="contact-name"
                       name="name"
                       type="text"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Your name"
                       required
                       className="w-full px-4 py-3 rounded-xl bg-zinc-800/50 border border-zinc-700 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
@@ -156,15 +157,13 @@ export default function Contact() {
                   </div>
                   
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-zinc-300 mb-2">
+                    <label htmlFor="contact-email" className="block text-sm font-medium text-zinc-300 mb-2">
                       Email
                     </label>
                     <input
-                      id="email"
+                      id="contact-email"
                       name="email"
                       type="email"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="you@example.com"
                       required
                       className="w-full px-4 py-3 rounded-xl bg-zinc-800/50 border border-zinc-700 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
@@ -172,14 +171,12 @@ export default function Contact() {
                   </div>
                   
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-zinc-300 mb-2">
+                    <label htmlFor="contact-message" className="block text-sm font-medium text-zinc-300 mb-2">
                       Message
                     </label>
                     <textarea
-                      id="message"
+                      id="contact-message"
                       name="message"
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Your message..."
                       rows={4}
                       required
