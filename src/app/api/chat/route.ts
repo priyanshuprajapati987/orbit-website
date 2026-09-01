@@ -20,17 +20,23 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ response });
     }
 
-    const systemPrompt = `You are ORBIT AI, an intelligent assistant for the ORBIT AI platform. ORBIT is a powerful AI system with:
-- 25 AI Agents (Coder, Researcher, Analyst, Memory, Planner, Executor, and 19 more)
-- 20 Tools (Web Search, Code Execution, File Operations, API Calls, System tools, Database queries)
-- 147 Blueprints (pre-built templates and workflows)
-- 6 LLM Providers (Ollama, Groq, Gemini, Cloudflare, OpenRouter, Portkey)
-- RouteLLM + ToolGate with 76 actions for intelligent routing
-- Smart Memory: LIVE Context + CHUNKS TF-IDF + SUMMARY system
-- 90.3% ground truth accuracy
-- Built with Python, Docker, and modern infrastructure
+    const systemPrompt = `You are ORBIT AI, a smart and friendly AI assistant. You can answer ANY question - not just about ORBIT.
 
-You are helpful, knowledgeable, and enthusiastic about ORBIT. Answer questions about ORBIT's features, capabilities, pricing, and technical details. Be conversational and friendly. If asked about something unrelated to ORBIT, still help but gently steer back to ORBIT topics.`;
+About ORBIT (if asked):
+- 25 AI Agents, 20 Tools, 147 Blueprints, 6 LLM Providers
+- RouteLLM + ToolGate, Smart Memory system
+- Built by Priyanshu Prajapati
+
+Your personality:
+- Helpful, friendly, and conversational
+- Answer in the SAME LANGUAGE the user writes in (Hindi, English, Hinglish - whatever they use)
+- Keep answers concise but informative
+- Use emojis naturally
+- If asked about ORBIT, give detailed answers
+- If asked about anything else (coding, science, life, etc.), answer normally and helpfully
+- You are NOT limited to only ORBIT topics
+
+Be a great assistant. Answer whatever the user asks.`;
 
     const apiMessages = [
       { role: "system", content: systemPrompt },
@@ -76,45 +82,33 @@ You are helpful, knowledgeable, and enthusiastic about ORBIT. Answer questions a
 function getSmartResponse(message: string): string {
   const lower = message.toLowerCase();
 
-  if (lower.includes("hello") || lower.includes("hi") || lower.includes("hey") || lower.includes("namaste")) {
-    return "Hello! I'm ORBIT AI 🤖\n\nI'm here to help you with anything about ORBIT - our AI platform with 25 agents, 20 tools, 147 blueprints, and 6 LLM providers.\n\nWhat would you like to know?";
+  // ORBIT-specific responses
+  if (lower.includes("orbit")) {
+    if (lower.includes("price") || lower.includes("cost") || lower.includes("kitne") || lower.includes("paisa") || lower.includes("free")) {
+      return "ORBIT Pricing 💰\n\nWe're currently in pre-order phase! Early adopters get:\n\n✅ Lifetime discounts\n✅ Priority support\n✅ Early access to all features\n\nSign up on our Pre-Order section to lock in the best price!";
+    }
+    if (lower.includes("agent")) {
+      return "ORBIT has 25 AI Agents 🤖\n\n💻 Coder - Write & debug code\n🔍 Researcher - Gather info\n📊 Analyst - Data processing\n🧠 Memory - Context management\n📋 Planner - Task orchestration\n⚡ Executor - Run tasks\n...and 19 more!";
+    }
+    if (lower.includes("tool")) {
+      return "ORBIT Tools 🔧\n\n🌐 Web Search\n💻 Code Execution\n📁 File Operations\n🔗 API Calls\n🖥️ System Tools\n🗄️ Database\n...and 14 more tools!";
+    }
+    if (lower.includes("provider") || lower.includes("llm")) {
+      return "ORBIT Providers 🌐\n\n🦙 Ollama | ⚡ Groq | 🔮 Gemini\n☁️ Cloudflare | 🔀 OpenRouter | 🔑 Portkey\n\nRouteLLM auto-selects best provider!";
+    }
+    return "ORBIT is an AI platform with:\n🤖 25 Agents | 🔧 20 Tools | 📋 147 Blueprints\n🌐 6 Providers | 🧠 Smart Memory | ⚡ RouteLLM\n\nAsk me anything specific!";
   }
 
-  if (lower.includes("price") || lower.includes("cost") || lower.includes("kitne") || lower.includes("paisa") || lower.includes("free")) {
-    return "ORBIT Pricing 💰\n\nWe're currently in pre-order phase! Early adopters get:\n\n✅ Lifetime discounts\n✅ Priority support\n✅ Early access to all features\n✅ Direct access to 25 AI agents\n\nSign up on our Pre-Order section to lock in the best price!";
+  // General greeting
+  if (lower.includes("hello") || lower.includes("hi") || lower.includes("hey") || lower.includes("namaste") || lower.includes("hii")) {
+    return "Hey! 👋 I'm ORBIT AI. I can help with anything - ORBIT info, coding, general questions, whatever you need! Kya puchna hai?";
   }
 
-  if (lower.includes("feature") || lower.includes("kya hai") || lower.includes("what") || lower.includes("about")) {
-    return "ORBIT Features 🚀\n\n🤖 25 AI Agents - Specialized for coding, research, analysis, memory, planning\n🔧 20 Tools - Web search, code exec, file ops, APIs, system, DB\n📋 147 Blueprints - Pre-built templates for quick deployment\n🧠 Smart Memory - LIVE + CHUNKS TF-IDF + SUMMARY\n⚡ RouteLLM + ToolGate - 76 actions, intelligent routing\n🌐 6 Providers - Ollama, Groq, Gemini, Cloudflare, OpenRouter, Portkey\n\nWhat feature interests you most?";
+  // Coding questions
+  if (lower.includes("code") || lower.includes("programming") || lower.includes("javascript") || lower.includes("python") || lower.includes("react") || lower.includes("nextjs")) {
+    return "I can help with coding! 💻\n\nI know JavaScript, Python, React, Next.js, and more. Tell me what you need:\n- Code explanation\n- Bug fixes\n- Best practices\n- Project structure\n\nBatao kya chahiye!";
   }
 
-  if (lower.includes("agent")) {
-    return "ORBIT AI Agents 🤖\n\nWe have 25 specialized agents:\n\n💻 Coder Agent - Write, review, debug code\n🔍 Researcher Agent - Gather & analyze info\n📊 Analyst Agent - Data processing & insights\n🧠 Memory Agent - Context management\n📋 Planner Agent - Task orchestration\n⚡ Executor Agent - Run tasks & workflows\n\n...and 19 more specialized agents for different domains!\n\nEach agent is optimized for its specific task.";
-  }
-
-  if (lower.includes("tool")) {
-    return "ORBIT Tools 🔧\n\n20 powerful tools:\n\n🌐 Web Search - Real-time info retrieval\n💻 Code Execution - Run scripts & programs\n📁 File Operations - Read, write, manage files\n🔗 API Calls - Connect to external services\n🖥️ System Tools - OS interactions\n🗄️ Database - Query & manage data\n\n...and many more! Each tool works with our agents for maximum productivity.";
-  }
-
-  if (lower.includes("provider") || lower.includes("llm") || lower.includes("model")) {
-    return "ORBIT LLM Providers 🌐\n\n6 providers for best results:\n\n🦙 Ollama - Local, private models\n⚡ Groq - Ultra-fast inference\n🔮 Gemini - Google's latest models\n☁️ Cloudflare - Edge computing\n🔀 OpenRouter - Multiple models\n🔑 Portkey - Enterprise grade\n\nRouteLLM automatically selects the best provider for each task!";
-  }
-
-  if (lower.includes("memory")) {
-    return "ORBIT Smart Memory 🧠\n\nThree-layer memory system:\n\n📊 LIVE Context - Real-time tracking\n📝 CHUNKS TF-IDF - Semantic search\n📋 SUMMARY - Compressed knowledge\n\n⚡ Recall time: <50ms\n🎯 Ground truth: 90.3%\n💾 Storage: Optimized\n\nContext persists across sessions!";
-  }
-
-  if (lower.includes("blueprint")) {
-    return "ORBIT Blueprints 📋\n\n147 pre-built templates:\n\n🚀 Deployment templates\n⚡ Workflow automations\n🔗 Integration patterns\n🛠️ Custom task solutions\n\nEach blueprint is designed for quick deployment - seconds, not hours!";
-  }
-
-  if (lower.includes("kaise") || lower.includes("how") || lower.includes("work")) {
-    return "How ORBIT Works ⚡\n\n1️⃣ You give a task\n2️⃣ RouteLLM selects best provider\n3️⃣ Agent processes with tools\n4️⃣ Memory provides context\n5️⃣ Result delivered!\n\nSmart routing with 76 actions ensures optimal performance every time.";
-  }
-
-  if (lower.includes("contact") || lower.includes("reach") || lower.includes("email")) {
-    return "Contact Us 📧\n\n👤 Priyanshu Prajapati\n📧 priyanshuprajapati2693@gmail.com\n🔗 GitHub: github.com/priyanshuprajapati987\n💼 LinkedIn: linkedin.com/in/priyanshu-prajapati\n\nFeel free to reach out for:\n✅ Pre-order inquiries\n✅ Technical questions\n✅ Collaboration opportunities";
-  }
-
-  return "I'm ORBIT AI! 🤖\n\nI can help you with:\n\n🚀 ORBIT Features - 25 agents, 20 tools, 147 blueprints\n💰 Pricing & Pre-order info\n🔧 Technical details\n🧠 Memory system\n🌐 LLM Providers\n\nJust ask me anything! I'm here to help.";
+  // General questions - always give a helpful response
+  return "I can help with that! 🤔\n\nMujhe kuch bhi puch sakte ho - coding, science, life advice, ORBIT, ya kuch bhi aur!\n\nAgar ORBIT ke baare mein jaanna hai toh directly pucho. Otherwise, apna question batao! 💬";
 }
