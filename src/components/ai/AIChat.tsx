@@ -8,47 +8,6 @@ interface Message {
   id: string;
   role: "user" | "assistant";
   content: string;
-  timestamp: Date;
-}
-
-const ORBIT_RESPONSES = {
-  greeting: "Hello! I'm ORBIT AI. Ask me anything about our 25 agents, 20 tools, 147 blueprints, or 6 LLM providers.",
-  features: "ORBIT features:\n- 25 AI Agents for specialized tasks\n- 20 Tools for web, code, files, APIs\n- 147 Blueprints for quick deployment\n- 6 LLM Providers: Ollama, Groq, Gemini, Cloudflare, OpenRouter, Portkey\n- RouteLLM + ToolGate with 76 actions\n- Smart Memory: LIVE + CHUNKS TF-IDF + SUMMARY",
-  pricing: "ORBIT is currently in pre-order phase. Early adopters get lifetime discounts and priority support. Sign up on our pre-order section!",
-  tech: "Our tech stack includes:\n- 6 LLM Providers (Ollama, Groq, Gemini, Cloudflare, OpenRouter, Portkey)\n- RouteLLM for intelligent routing\n- ToolGate with 76 actions\n- Smart Memory system with 90.3% ground truth\n- 1,805 tests ensuring reliability",
-  agents: "Our 25 AI Agents include:\n- Coder Agent for development\n- Researcher Agent for information gathering\n- Analyst Agent for data processing\n- Memory Agent for context management\n- Planner Agent for task orchestration\n- Executor Agent for running tasks\n- And 19 more specialized agents!",
-  default: "I'm ORBIT AI, your personal AI companion. I can help you with:\n- Information about our 25 AI agents\n- Details on 20 tools and 147 blueprints\n- How our 6 LLM providers work\n- Pre-order and pricing information\n\nWhat would you like to know?",
-};
-
-function getAIResponse(message: string): string {
-  const lower = message.toLowerCase();
-  
-  if (lower.includes("hello") || lower.includes("hi") || lower.includes("hey")) {
-    return ORBIT_RESPONSES.greeting;
-  }
-  if (lower.includes("feature") || lower.includes("what can") || lower.includes("capability")) {
-    return ORBIT_RESPONSES.features;
-  }
-  if (lower.includes("price") || lower.includes("cost") || lower.includes("buy") || lower.includes("pre-order")) {
-    return ORBIT_RESPONSES.pricing;
-  }
-  if (lower.includes("tech") || lower.includes("stack") || lower.includes("provider") || lower.includes("llm")) {
-    return ORBIT_RESPONSES.tech;
-  }
-  if (lower.includes("agent") || lower.includes("agent")) {
-    return ORBIT_RESPONSES.agents;
-  }
-  if (lower.includes("tool")) {
-    return "ORBIT includes 20 powerful tools:\n- Web Search for information retrieval\n- Code Execution for running scripts\n- File Operations for managing files\n- API Calls for external services\n- System tools for OS interactions\n- Database queries\n- And many more!";
-  }
-  if (lower.includes("blueprint")) {
-    return "ORBIT has 147 pre-built blueprints:\n- Deployment templates\n- Workflow automations\n- Integration patterns\n- Custom task solutions\n\nEach blueprint is designed for quick deployment in seconds!";
-  }
-  if (lower.includes("memory")) {
-    return "Our Smart Memory system:\n- LIVE Context for real-time tracking\n- CHUNKS TF-IDF for semantic search\n- SUMMARY for compressed knowledge\n- Instant recall with <50ms response time";
-  }
-  
-  return ORBIT_RESPONSES.default;
 }
 
 export default function AIChat() {
@@ -57,8 +16,7 @@ export default function AIChat() {
     {
       id: "1",
       role: "assistant",
-      content: ORBIT_RESPONSES.greeting,
-      timestamp: new Date(),
+      content: "Hello! I'm ORBIT AI 🤖\n\nAsk me anything about our 25 agents, 20 tools, 147 blueprints, or 6 LLM providers.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -80,25 +38,43 @@ export default function AIChat() {
       id: Date.now().toString(),
       role: "user",
       content: input.trim(),
-      timestamp: new Date(),
     };
 
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsTyping(true);
 
-    // Simulate AI thinking
-    await new Promise((resolve) => setTimeout(resolve, 1000 + Math.random() * 1000));
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [...messages, userMessage].map((m) => ({
+            role: m.role,
+            content: m.content,
+          })),
+        }),
+      });
 
-    const aiResponse: Message = {
-      id: (Date.now() + 1).toString(),
-      role: "assistant",
-      content: getAIResponse(userMessage.content),
-      timestamp: new Date(),
-    };
+      const data = await response.json();
 
-    setMessages((prev) => [...prev, aiResponse]);
-    setIsTyping(false);
+      const aiMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content: data.response || "Sorry, I couldn't process that. Please try again.",
+      };
+
+      setMessages((prev) => [...prev, aiMessage]);
+    } catch {
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content: "Connection error. Please try again later.",
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   return (
@@ -156,7 +132,7 @@ export default function AIChat() {
                 </div>
                 <div>
                   <h3 className="text-white font-bold">ORBIT AI</h3>
-                  <p className="text-white/70 text-xs">Ask me anything</p>
+                  <p className="text-white/70 text-xs">Powered by AI</p>
                 </div>
                 <div className="ml-auto flex items-center gap-1">
                   <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
@@ -206,8 +182,9 @@ export default function AIChat() {
                   <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center">
                     <Bot className="w-4 h-4 text-white" />
                   </div>
-                  <div className="bg-zinc-800 p-3 rounded-2xl rounded-bl-md">
+                  <div className="bg-zinc-800 p-3 rounded-2xl rounded-bl-md flex items-center gap-2">
                     <Loader2 className="w-4 h-4 text-zinc-400 animate-spin" />
+                    <span className="text-xs text-zinc-400">Thinking...</span>
                   </div>
                 </motion.div>
               )}
