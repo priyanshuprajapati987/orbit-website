@@ -82,6 +82,24 @@ Be a great assistant. Answer whatever the user asks.`;
 function getSmartResponse(message: string): string {
   const lower = message.toLowerCase();
 
+  // ===== PURE MATH (before any keyword check) =====
+  if (lower.match(/\d+\s*\+\s*\d+/)) {
+    const nums = lower.match(/(\d+)\s*\+\s*(\d+)/);
+    if (nums) return `${nums[1]} + ${nums[2]} = ${parseInt(nums[1]) + parseInt(nums[2])} ✅`;
+  }
+  if (lower.match(/\d+\s*-\s*\d+/)) {
+    const nums = lower.match(/(\d+)\s*-\s*(\d+)/);
+    if (nums) return `${nums[1]} - ${nums[2]} = ${parseInt(nums[1]) - parseInt(nums[2])} ✅`;
+  }
+  if (lower.match(/\d+\s*\*\s*\d+/) || lower.match(/\d+\s*x\s*\d+/)) {
+    const nums = lower.match(/(\d+)\s*[*x]\s*(\d+)/);
+    if (nums) return `${nums[1]} x ${nums[2]} = ${parseInt(nums[1]) * parseInt(nums[2])} ✅`;
+  }
+  if (lower.match(/\d+\s*\/\s*\d+/)) {
+    const nums = lower.match(/(\d+)\s*\/\s*(\d+)/);
+    if (nums && parseInt(nums[2]) !== 0) return `${nums[1]} / ${nums[2]} = ${(parseInt(nums[1]) / parseInt(nums[2])).toFixed(2)} ✅`;
+  }
+
   // ===== ORBIT =====
   if (lower.includes("orbit")) {
     if (lower.includes("price") || lower.includes("cost") || lower.includes("kitne") || lower.includes("paisa") || lower.includes("free")) {
@@ -151,20 +169,8 @@ function getSmartResponse(message: string): string {
   }
 
   // ===== MATH =====
-  if (lower.includes("math") || lower.includes("maths") || lower.includes("ganit") || lower.includes("calculate") || lower.includes("number") || lower.includes("add") || lower.includes("plus") || lower.includes("minus")) {
-    if (lower.match(/\d+\s*\+\s*\d+/)) {
-      const nums = lower.match(/(\d+)\s*\+\s*(\d+)/);
-      if (nums) return `${nums[1]} + ${nums[2]} = **${parseInt(nums[1]) + parseInt(nums[2])}** ✅`;
-    }
-    if (lower.match(/\d+\s*-\s*\d+/)) {
-      const nums = lower.match(/(\d+)\s*-\s*(\d+)/);
-      if (nums) return `${nums[1]} - ${nums[2]} = **${parseInt(nums[1]) - parseInt(nums[2])}** ✅`;
-    }
-    if (lower.match(/\d+\s*\*\s*\d+/) || lower.match(/\d+\s*x\s*\d+/)) {
-      const nums = lower.match(/(\d+)\s*[*x]\s*(\d+)/);
-      if (nums) return `${nums[1]} × ${nums[2]} = **${parseInt(nums[1]) * parseInt(nums[2])}** ✅`;
-    }
-    return "Math Helper 🔢\n\nMain calculate kar sakta hun! Ye try karo:\n• \"5 + 3\"\n• \"10 - 4\"\n• \"6 * 7\"\n• \"100 / 5\"\n\nYa koi math concept pucho!";
+  if (lower.includes("math") || lower.includes("maths") || lower.includes("ganit") || lower.includes("calculate")) {
+    return "Math Helper 🔢\n\nDirect calculate karo! Ye try karo:\n• 5 + 3\n• 10 - 4\n• 6 * 7\n• 100 / 5\n\nYa koi math concept pucho!";
   }
 
   // ===== TIME/DATE =====
