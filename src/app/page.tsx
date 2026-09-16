@@ -4,6 +4,9 @@ import Hero from "@/components/sections/Hero";
 import Features from "@/components/sections/Features";
 import TechStack from "@/components/sections/TechStack";
 import Demo from "@/components/sections/Demo";
+import Pricing from "@/components/sections/Pricing";
+import Testimonials from "@/components/sections/Testimonials";
+import FAQ from "@/components/sections/FAQ";
 import PreOrder from "@/components/sections/PreOrder";
 import Contact from "@/components/sections/Contact";
 import AIChat from "@/components/ai/AIChat";
@@ -17,6 +20,9 @@ export default function Home() {
         <Features />
         <TechStack />
         <Demo />
+        <Pricing />
+        <Testimonials />
+        <FAQ />
         <PreOrder />
         <Contact />
       </main>
