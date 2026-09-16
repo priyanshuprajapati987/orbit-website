@@ -20,7 +20,6 @@ export default function Navbar() {
     { label: "Home", href: "/" },
     { label: "Features", href: "#features" },
     { label: "Demo", href: "#demo" },
-    { label: "Pricing", href: "#pricing" },
     { label: "Docs", href: "/docs" },
   ];
 

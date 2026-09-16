@@ -4,7 +4,6 @@ import Hero from "@/components/sections/Hero";
 import Features from "@/components/sections/Features";
 import TechStack from "@/components/sections/TechStack";
 import Demo from "@/components/sections/Demo";
-import Pricing from "@/components/sections/Pricing";
 import Testimonials from "@/components/sections/Testimonials";
 import FAQ from "@/components/sections/FAQ";
 import PreOrder from "@/components/sections/PreOrder";
@@ -20,7 +19,6 @@ export default function Home() {
         <Features />
         <TechStack />
         <Demo />
-        <Pricing />
         <Testimonials />
         <FAQ />
         <PreOrder />
