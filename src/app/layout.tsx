@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://comfy-dasik-e7cdcb.netlify.app"),
   title: {
     default: "ORBIT - Your Personal AI Companion | 25 Agents, 20 Tools",
     template: "%s | ORBIT AI",

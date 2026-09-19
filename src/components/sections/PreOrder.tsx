@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ShoppingCart, Mail, Check, Sparkles, ArrowRight, Shield, Clock, Zap, Loader2 } from "lucide-react";
+import { ShoppingCart, Mail, Check, Sparkles, ArrowRight, Shield, Clock, Zap } from "lucide-react";
 
 export default function PreOrder() {
   const [email, setEmail] = useState("");

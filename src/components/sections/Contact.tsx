@@ -64,7 +64,7 @@ export default function Contact() {
   };
 
   return (
-    <section className="py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <section id="contact" className="py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-black via-zinc-900/20 to-black" />
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-red-500/5 rounded-full blur-3xl" />

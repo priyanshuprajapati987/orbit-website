@@ -327,7 +327,7 @@ body {
 .typing {
   overflow: hidden;
   border-right: 2px solid #FF0000;
-  animation: typing 3s steps(30) 1s forwards, blink 0.7s step-end infinite;
+  animation: typing 3s steps(30) 1s forwards, blink-border 0.7s step-end infinite;
   white-space: nowrap;
 }
 
@@ -336,7 +336,7 @@ body {
   to { width: 100%; }
 }
 
-@keyframes blink {
+@keyframes blink-border {
   50% { border-color: transparent; }
 }
 

@@ -2,7 +2,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Badge from "@/components/ui/Badge";
 import Card from "@/components/ui/Card";
-import { Brain, Users, Wrench, Layout, Cpu, Database, Route, Zap } from "lucide-react";
+import { Users, Wrench, Layout, Cpu, Database, Zap } from "lucide-react";
 
 const features = [
   {

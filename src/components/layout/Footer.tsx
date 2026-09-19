@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Code2, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 import { GithubIcon, LinkedinIcon, LeetcodeIcon } from "@/components/ui/Icons";
 import { siteConfig } from "@/lib/constants";
 

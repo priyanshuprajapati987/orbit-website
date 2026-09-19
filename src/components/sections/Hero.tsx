@@ -223,10 +223,12 @@ export default function Hero() {
               <ArrowRight className="w-5 h-5" />
             </button>
           </a>
-          <Button variant="outline" size="lg" className="glass border-zinc-700 hover:border-red-500/50">
-            <BookOpen className="w-5 h-5" />
-            Documentation
-          </Button>
+          <a href="/docs">
+            <Button variant="outline" size="lg" className="glass border-zinc-700 hover:border-red-500/50">
+              <BookOpen className="w-5 h-5" />
+              Documentation
+            </Button>
+          </a>
           <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer">
             <Button variant="ghost" size="lg" className="text-zinc-400 hover:text-white">
               <GithubIcon className="w-5 h-5" />
