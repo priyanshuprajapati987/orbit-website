@@ -6,6 +6,7 @@ import TechStack from "@/components/sections/TechStack";
 import Demo from "@/components/sections/Demo";
 import Testimonials from "@/components/sections/Testimonials";
 import FAQ from "@/components/sections/FAQ";
+import CTABanner from "@/components/sections/CTABanner";
 import PreOrder from "@/components/sections/PreOrder";
 import Contact from "@/components/sections/Contact";
 import AIChat from "@/components/ai/AIChat";
@@ -21,6 +22,7 @@ export default function Home() {
         <Demo />
         <Testimonials />
         <FAQ />
+        <CTABanner />
         <PreOrder />
         <Contact />
       </main>

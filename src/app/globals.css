@@ -473,3 +473,80 @@ input:focus, textarea:focus {
   background: rgba(255, 0, 0, 0.3);
   color: white;
 }
+
+/* ===== LOADING SKELETON ===== */
+.skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ===== TEXT SHIMMER ===== */
+.text-shimmer {
+  background: linear-gradient(90deg, #fff 0%, #ff6b6b 50%, #fff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: text-shimmer 3s linear infinite;
+}
+
+@keyframes text-shimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ===== HOVER GLOW ===== */
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.3), 0 0 60px rgba(255, 69, 0, 0.1);
+}
+
+/* ===== CARD STAGGER ===== */
+.card-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: card-stagger-in 0.5s ease forwards;
+}
+
+.card-stagger > *:nth-child(1) { animation-delay: 0.1s; }
+.card-stagger > *:nth-child(2) { animation-delay: 0.2s; }
+.card-stagger > *:nth-child(3) { animation-delay: 0.3s; }
+.card-stagger > *:nth-child(4) { animation-delay: 0.4s; }
+.card-stagger > *:nth-child(5) { animation-delay: 0.5s; }
+.card-stagger > *:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes card-stagger-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+@media (max-width: 640px) {
+  .glass-card {
+    backdrop-filter: blur(10px);
+  }
+  
+  .btn-primary {
+    padding: 0.75rem 1.5rem;
+  }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

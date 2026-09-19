@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /login/
+
+Sitemap: https://comfy-dasik-e7cdcb.netlify.app/sitemap.xml
