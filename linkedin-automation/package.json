@@ -1,0 +1,16 @@
+{
+  "name": "orbit-linkedin-automation",
+  "version": "1.0.0",
+  "description": "LinkedIn Auto-Poster for Orbit",
+  "main": "poster.py",
+  "scripts": {
+    "post": "python poster.py",
+    "schedule": "python scheduler.py",
+    "setup": "python setup.py"
+  },
+  "dependencies": {
+    "requests": "^2.31.0",
+    "schedule": "^1.2.0",
+    "python-dotenv": "^1.0.0"
+  }
+}
