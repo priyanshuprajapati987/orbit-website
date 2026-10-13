@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "ORBIT",
   title: "ORBIT - Your Personal AI Companion",
-  description: "Like JARVIS, but it actually works. ORBIT is an AI assistant with 25 agents, 20 tools, and 6 LLM providers.",
+  description: "Like JARVIS, but it actually works. ORBIT is an AI assistant with 25 agents, 36 tools, and 7 LLM providers.",
   tagline: "Like JARVIS, but it actually works",
   author: {
     name: "Priyanshu Prajapati",
@@ -24,20 +24,20 @@ export const features = [
     gradient: "from-red-500 to-orange-500",
   },
   {
-    title: "20 Tools",
-    description: "Powerful tools for web search, code execution, file operations, API calls, and system interactions.",
+    title: "36 Tools",
+    description: "20 tool modules + 16 utility tools for web search, code execution, file operations, API calls, and system interactions.",
     icon: "Wrench",
     gradient: "from-orange-500 to-red-500",
   },
   {
-    title: "147 Blueprints",
+    title: "200 Blueprints",
     description: "Pre-built templates and workflows for common tasks. Deploy solutions in seconds, not hours.",
     icon: "Layout",
     gradient: "from-red-500 to-pink-500",
   },
   {
-    title: "6 LLM Providers",
-    description: "Ollama, Groq, Gemini, Cloudflare, OpenRouter, Portkey - route to the best model for each task.",
+    title: "7 LLM Providers",
+    description: "Ollama, OpenAI, Groq, Gemini, Cloudflare, OpenRouter, Portkey - route to the best model for each task.",
     icon: "Layers",
     gradient: "from-orange-500 to-yellow-500",
   },
@@ -49,14 +49,14 @@ export const features = [
   },
   {
     title: "RouteLLM + ToolGate",
-    description: "Intelligent routing with 76 actions. Auto-selects the best provider and tool for maximum performance.",
+    description: "Intelligent routing with 44 tool actions. Auto-selects the best provider and tool for maximum performance.",
     icon: "Zap",
     gradient: "from-yellow-500 to-red-500",
   },
 ];
 
 export const techStack = {
-  providers: ["Ollama", "Groq", "Gemini", "Cloudflare", "OpenRouter", "Portkey"],
+  providers: ["Ollama", "OpenAI", "Groq", "Gemini", "Cloudflare", "OpenRouter", "Portkey"],
   agents: ["Coder", "Researcher", "Analyst", "Memory", "Planner", "Executor"],
   tools: ["Web Search", "Code Exec", "File Ops", "API Calls", "System", "DB Query"],
   memory: ["LIVE Context", "CHUNKS TF-IDF", "SUMMARY", "Semantic Search"],
@@ -66,19 +66,19 @@ export const techStack = {
 
 export const stats = [
   { label: "AI Agents", value: "25" },
-  { label: "Tools", value: "20" },
-  { label: "Blueprints", value: "147" },
-  { label: "LLM Providers", value: "6" },
+  { label: "Tools", value: "36" },
+  { label: "Blueprints", value: "200" },
+  { label: "LLM Providers", value: "7" },
 ];
 
 export const auditStats = {
   agents: 25,
-  tools: 20,
-  blueprints: 147,
-  components: 99,
-  tests: 1805,
-  providers: 6,
+  tools: 36,
+  blueprints: 200,
+  components: 138,
+  tests: 3101,
+  providers: 7,
   routingTasks: 10,
-  toolGateActions: 76,
-  groundTruth: "90.3%",
+  toolGateActions: 44,
+  groundTruth: "96.1%",
 };

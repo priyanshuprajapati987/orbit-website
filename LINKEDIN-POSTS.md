@@ -15,9 +15,9 @@ That's why I built Orbit.
 Here's what it does:
 
 → 25 AI Agents that handle different tasks
-→ 20 Built-in tools (no more tab switching)
-→ 147 Blueprints for common workflows
-→ 6 LLM providers (OpenAI, Anthropic, Google, Meta, Mistral, DeepSeek)
+→ 36 Built-in tools (no more tab switching)
+→ 200 Blueprints for common workflows
+→ 7 LLM providers (Ollama, OpenAI, Groq, Gemini, Cloudflare AI, OpenRouter, Portkey)
 → One clean interface
 
 The result?
@@ -59,7 +59,7 @@ One system that actually talks to itself.
 
 That's when Orbit was born.
 
-25 AI agents. 20 tools. 147 blueprints.
+25 AI agents. 36 tools. 200 blueprints.
 
 All working together. All in one place.
 
@@ -109,7 +109,7 @@ One system. One interface. Zero context switching.
 
 That's what I'm building with Orbit.
 
-25 agents. 20 tools. 147 blueprints.
+25 agents. 36 tools. 200 blueprints.
 
 All talking to each other. All working for you.
 
@@ -139,7 +139,7 @@ The solution isn't another AI tool.
 
 The solution is ONE system that does everything.
 
-25 agents. 20 tools. 147 blueprints.
+25 agents. 36 tools. 200 blueprints.
 
 All in one place. All working together.
 
@@ -173,7 +173,7 @@ This week I added 3 new features to Orbit:
 
 3. Blueprint Sharing
    - Share your workflows with the community
-   - 147 blueprints and growing
+   - 200 blueprints and growing
 
 What's next?
 
@@ -205,7 +205,7 @@ Orbit isn't another AI tool.
 
 It's a system that connects ALL your AI tools.
 
-25 agents. 20 tools. 147 blueprints.
+25 agents. 36 tools. 200 blueprints.
 
 All talking to each other. All working together.
 
@@ -239,7 +239,7 @@ But Orbit isn't just another tool.
 
 It's a system that finally made sense of my AI workflow.
 
-25 agents. 20 tools. All connected.
+25 agents. 36 tools. All connected.
 
 I went from spending 2 hours/day on AI tool management to 10 minutes.
 
@@ -280,7 +280,7 @@ That's 17 ENTIRE DAYS lost to tool management.
 
 That's when I decided to build Orbit.
 
-One system. 25 agents. 20 tools.
+One system. 25 agents. 36 tools.
 
 Zero context switching.
 
@@ -306,7 +306,7 @@ Tool fatigue. Context switching. Lost productivity.
 One system that connects everything.
 
 4/ What I'm Building
-Orbit: 25 agents, 20 tools, 147 blueprints.
+Orbit: 25 agents, 36 tools, 200 blueprints.
 
 5/ How It Works
 Agents talk to each other. Tools work together.
@@ -340,8 +340,8 @@ I'm building something for you.
 Orbit:
 - 25 AI agents
 - 20 built-in tools
-- 147 workflow blueprints
-- 6 LLM providers
+- 200 workflow blueprints
+- 7 LLM providers
 - One clean interface
 
 No more tab switching.

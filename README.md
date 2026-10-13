@@ -1,6 +1,6 @@
 # 🪐 ORBIT — Your Personal AI Companion
 
-> 25 AI Agents. 20 Tools. 147 Blueprints. 6 LLM Providers. Like JARVIS, but it actually works.
+> 25 AI Agents. 36 Tools. 200 Blueprints. 7 LLM Providers. Like JARVIS, but it actually works.
 
 🌐 **Live:** https://comfy-dasik-e7cdcb.netlify.app
 
@@ -24,16 +24,16 @@ Official landing page + documentation site for **ORBIT AI** — built for produc
 | 🤖 AI Chat | Floating widget, answers anything (OpenRouter + smart fallback) |
 | 📚 Docs | 5 documentation pages (`/docs`, `/getting-started`, `/features`, `/api`, `/architecture`) |
 
-### ORBIT Stats (Aug 2026 Audit)
+### ORBIT Stats (verified, v3.7.0 — source: private repo README, 12 Oct 2026 audit)
 
-- 🤖 **25** specialized agents
-- 🔧 **20** tools (RouteLLM + ToolGate, 76 actions)
-- 📋 **147** blueprints
-- 🧩 **99** components
-- ✅ **1,805** tests
-- 🌐 **6** providers (Ollama, Groq, Gemini, Cloudflare, OpenRouter, Portkey)
+- 🤖 **25** specialized agents (AGENT_REGISTRY)
+- 🔧 **36** tools (20 tool modules + 16 utility tools; 44 RouteLLM + ToolGate actions)
+- 📋 **200** blueprints (registered)
+- 🧩 **138** React components (119 panels wired)
+- ✅ **3,101** tests passed (full suite, 0 failed, 14 skipped)
+- 🌐 **7** providers (Ollama, OpenAI, Groq, Gemini, Cloudflare, OpenRouter, Portkey)
 - 🧠 Smart Memory: LIVE + CHUNKS TF-IDF + SUMMARY
-- 🎯 **90.3%** ground-truth accuracy
+- 🎯 **96.1%** ground-truth accuracy (99/103 curated items, qwen3:8b, 2026-10-06)
 
 ---
 
