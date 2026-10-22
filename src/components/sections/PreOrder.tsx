@@ -6,34 +6,8 @@ import { ShoppingCart, Mail, Check, Sparkles, ArrowRight, Shield, Clock, Zap } f
 
 export default function PreOrder() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-
-    setStatus("loading");
-
-    try {
-      const response = await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-          "form-name": "preorder",
-          email,
-        }).toString(),
-      });
-
-      if (response.ok) {
-        setStatus("success");
-        setEmail("");
-      } else {
-        setStatus("error");
-      }
-    } catch {
-      setStatus("error");
-    }
-  };
+  // Native Netlify form (no JS submit) - status sirf render check ke liye
+  const [status] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   return (
     <section id="preorder" className="py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">

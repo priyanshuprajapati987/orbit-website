@@ -3,12 +3,14 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen, Sparkles, Zap, Brain, Mic } from "lucide-react";
+import Link from "next/link";
 import Button from "@/components/ui/Button";
 import Badge from "@/components/ui/Badge";
 import { GithubIcon } from "@/components/ui/Icons";
 import { siteConfig, stats } from "@/lib/constants";
 
 function ParticleField() {
+  // drift pehle se generate hota hai - render me Math.random() impure hai (React rule)
   const [particles] = useState(() =>
     Array.from({ length: 50 }, (_, i) => ({
       id: i,
@@ -17,6 +19,7 @@ function ParticleField() {
       size: Math.random() * 4 + 1,
       duration: Math.random() * 10 + 10,
       delay: Math.random() * 5,
+      drift: Math.random() * 50 - 25,
     }))
   );
 
@@ -34,7 +37,7 @@ function ParticleField() {
           }}
           animate={{
             y: [0, -100, 0],
-            x: [0, Math.random() * 50 - 25, 0],
+            x: [0, p.drift, 0],
             opacity: [0, 0.6, 0],
             scale: [1, 1.5, 1],
           }}
@@ -217,18 +220,18 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20"
         >
-          <a href="/#preorder">
+          <Link href="/#preorder">
             <button className="btn-primary px-8 py-4 rounded-xl text-white font-semibold flex items-center gap-2 text-lg">
               Get Access
               <ArrowRight className="w-5 h-5" />
             </button>
-          </a>
-          <a href="/docs">
+          </Link>
+          <Link href="/docs">
             <Button variant="outline" size="lg" className="glass border-zinc-700 hover:border-red-500/50">
               <BookOpen className="w-5 h-5" />
               Documentation
             </Button>
-          </a>
+          </Link>
           <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer">
             <Button variant="ghost" size="lg" className="text-zinc-400 hover:text-white">
               <GithubIcon className="w-5 h-5" />
